@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-//Rest Controller
+// Exception Controller
 
 @RestController
-@RequestMapping("/api/v1")
-public class MusicController {
+@RequestMapping("/api/exceptions")
+public class ExceptionController {
     private ArrayList<String> musics = new ArrayList();
 
-    public MusicController() {
+    public ExceptionController() {
         this.musics.add("Travis Scott");
         this.musics.add("Pink Floyd");
         this.musics.add("PNL");
@@ -21,19 +21,19 @@ public class MusicController {
 
     @RequestMapping(value = "/musics", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<String>> getMusics() {
-        return new ResponseEntity<ArrayList<String>>(this.musics, HttpStatus.OK);
+        throw new NullPointerException("Server error");
     }
 
     @RequestMapping(value = "/musics", method = RequestMethod.POST)
-    public ResponseEntity<String> addMusics(String name) {
+    public ResponseEntity<String> addMusics(String name) throws Exception {
         this.musics.add(name);
-        return new ResponseEntity<String>("Response from POST", HttpStatus.OK);
+        throw new Exception("Internal server error");
     }
 
     @RequestMapping(value = "/musics/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteMusics(@PathVariable String name) {
+    public ResponseEntity<String> deleteMusics(@PathVariable String name) throws Exception {
         this.musics.remove(name);
-        return new ResponseEntity<String>("Response from DELETE", HttpStatus.OK);
+        throw new Exception("Ressource not found");
     }
 
     @RequestMapping(value = "/musics", method = RequestMethod.PUT)
@@ -48,5 +48,3 @@ public class MusicController {
         return new ResponseEntity<String>("Response from PATCH", HttpStatus.OK);
     }
 }
-
-

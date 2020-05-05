@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-//Rest Controller
+//Return Code Controller
 
 @RestController
-@RequestMapping("/api/v1")
-public class MusicController {
+@RequestMapping("/api/codes")
+public class ReturnCodeController {
     private ArrayList<String> musics = new ArrayList();
 
-    public MusicController() {
+    public ReturnCodeController() {
         this.musics.add("Travis Scott");
         this.musics.add("Pink Floyd");
         this.musics.add("PNL");
@@ -48,5 +48,3 @@ public class MusicController {
         return new ResponseEntity<String>("Response from PATCH", HttpStatus.OK);
     }
 }
-
-
