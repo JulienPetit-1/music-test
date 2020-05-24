@@ -24,8 +24,7 @@ public class MusicController {
         this.musicService = musicService;
     }
 
-<<<<<<< Updated upstream
-=======
+
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the ressource"),
@@ -34,7 +33,7 @@ public class MusicController {
     })
 
 //Méthode GET
->>>>>>> Stashed changes
+
     @RequestMapping(value = "/musics", method = RequestMethod.GET)
     public ResponseEntity<List<Music>> getMusics() {
         return new ResponseEntity<>(musicService.findMusics(), HttpStatus.OK);
@@ -46,7 +45,8 @@ public class MusicController {
     public ResponseEntity<Music> getMusicsById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(musicService.getMusics(id), HttpStatus.OK);
-        } catch (NotFoundException e) {
+        }
+        catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Music Not Found", e);
         }
     }
@@ -57,36 +57,17 @@ public class MusicController {
         return new ResponseEntity<>(music, HttpStatus.CREATED);
     }
 
-<<<<<<< Updated upstream
-    @RequestMapping(value = "/musics/{name}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteMusics(@PathVariable String name) {
-        this.musics.remove(name);
-        return new ResponseEntity<String>("Response from DELETE", HttpStatus.OK);
-=======
 //Méthode DELETE
     @RequestMapping(value = "/musics/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Music> deleteMusics(@PathVariable(value = "id") Long id) {
         musicService.deleteMusic(id);
         return new ResponseEntity<>(HttpStatus.OK);
->>>>>>> Stashed changes
     }
 
     @RequestMapping(value = "/musics", method = RequestMethod.PUT)
-<<<<<<< Updated upstream
-    public ResponseEntity<String> putMusics(@RequestBody ArrayList<String> musics) {
-        this.musics = musics;
-        return new ResponseEntity<String>("Response from PUT", HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/musics/{name}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> patchMusics(@PathVariable String name,  String newname) {
-        this.musics.set(this.musics.indexOf(name), newname);
-        return new ResponseEntity<String>("Response from PATCH", HttpStatus.OK);
-=======
     public ResponseEntity<Music> putMusics(@RequestBody Music music) {
         musicService.updateMusic(music);
         return new ResponseEntity<>(music, HttpStatus.OK);
->>>>>>> Stashed changes
     }
 }
 
