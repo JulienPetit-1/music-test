@@ -1,10 +1,10 @@
 package com.esme.Music.domain;
 
-
 import lombok.*;
 
-import java.time.Duration;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Getter
 @ToString
@@ -13,16 +13,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Music {
+public class Label {
     public Long id;
-    public String name;
-    public Artist artist;
-    public Album album;
+    public String name_label;
+    public ArrayList artist;
     public String genre;
     public Integer note;
     public String feat;
-    public Duration duration;
+    public SimpleDateFormat duration;
     public Integer BPM;
     public LocalDate release_date;
 }
-

@@ -2,6 +2,7 @@ package com.esme.Music.application;
 
 import com.esme.Music.domain.Music;
 import com.esme.Music.domain.MusicService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@Api("API de gestion d'une librairie musicale")
+
 public class MusicController {
 
     private MusicService musicService;

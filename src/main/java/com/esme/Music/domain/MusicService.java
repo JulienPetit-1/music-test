@@ -3,7 +3,7 @@ package com.esme.Music.domain;
 import com.esme.Music.infrastructure.MusicDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class MusicService {
     }
 
     @Cacheable("musics")
-    public Music getMusics(Long id) throws ChangeSetPersister.NotFoundException {
+    public Music getMusics(Long id) throws NotFoundException {
         return musicDao.findMusics(id);
     }
 

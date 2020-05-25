@@ -1,14 +1,9 @@
 package com.esme.Music.infrastructure;
 
-import com.esme.Music.domain.Album;
-import com.esme.Music.domain.Artist;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.text.SimpleDateFormat;
+import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
 
 
@@ -28,10 +23,10 @@ public class MusicEntity {
     private Long id;
     @Column(name = "Name", length=50, nullable = false)
     private String name;
-    @Column(name = "Artist", nullable = false)
-    private Artist artist;
-    @Column(name = "Album", nullable = false)
-    private Album album;
+//    @Column(name = "Artist", nullable = false)
+//    private Artist artist;
+//    @Column(name = "Album", nullable = false)
+//    private Album album;
     @Column(name = "Genre", length=50, nullable = false)
     private String genre;
     @Column(name = "Note")
@@ -39,9 +34,14 @@ public class MusicEntity {
     @Column(name = "Feat", length=50)
     private String feat;
     @Column(name = "Duration", nullable = false)
-    private SimpleDateFormat duration;
+    private Duration duration;
     @Column(name = "BPM")
     private Integer BPM;
     @Column(name = "Release Date", nullable = false)
     private LocalDate release_date;
+
+    @ManyToOne
+    private AlbumEntity albumEntity;
+    @ManyToOne
+    private ArtistEntity artistEntity;
 }

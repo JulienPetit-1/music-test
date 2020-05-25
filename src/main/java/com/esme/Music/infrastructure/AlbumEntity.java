@@ -1,14 +1,11 @@
 package com.esme.Music.infrastructure;
 
-import com.esme.Music.domain.Artist;
 import lombok.*;
+import org.springframework.format.datetime.joda.LocalDateParser;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -25,12 +22,12 @@ public class AlbumEntity {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "Artist", nullable = false)
-    private Artist artist;
-    @Column(name = "Name", length=50, nullable = false)
+//    @Column(name = "Artist", nullable = false)
+//    private Artist artist;
+//    @Column(name = "Name", length=50, nullable = false)
     private String name_album;
     @Column(name = "Release Date", nullable = false)
-    private LocalDate release_date;
+    private LocalDateParser release_date;
     @Column(name = "Number of tracks", nullable = false)
     private Integer nb_tracks;
     @Column(name = "Duration", nullable = false)
@@ -41,4 +38,9 @@ public class AlbumEntity {
     private String label;
     @Column(name = "Disponibility")
     private Boolean disponibility;
+
+    @ManyToOne
+    private ArtistEntity artistEntity;
+    @OneToMany(mappedBy = "albumEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private List<MusicEntity> musicEntities;
 }

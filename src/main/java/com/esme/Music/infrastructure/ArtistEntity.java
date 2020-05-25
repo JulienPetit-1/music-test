@@ -2,10 +2,8 @@ package com.esme.Music.infrastructure;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Getter
@@ -28,4 +26,11 @@ public class ArtistEntity {
     private Integer nb_fans;
     @Column(name = "Number of albums", nullable = false)
     private Integer nb_albums;
+
+    @ManyToOne
+    private LabelEntity labelEntity;
+    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private List<AlbumEntity> albumEntities;
+    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private List<MusicEntity> musicEntities;
 }
