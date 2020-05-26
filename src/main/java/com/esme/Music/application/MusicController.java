@@ -1,7 +1,7 @@
 package com.esme.Music.application;
 
-import com.esme.Music.domain.Music;
-import com.esme.Music.domain.MusicService;
+import com.esme.Music.domain.Artist;
+import com.esme.Music.domain.ArtistService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,10 +21,10 @@ import java.util.List;
 
 public class MusicController {
 
-    private MusicService musicService;
+    private ArtistService artistService;
 
-    public MusicController(MusicService musicService) {
-        this.musicService = musicService;
+    public MusicController(ArtistService artistService) {
+        this.artistService = artistService;
     }
 
 
@@ -37,40 +37,41 @@ public class MusicController {
 
 //Méthode GET
 
-    @RequestMapping(value = "/musics", method = RequestMethod.GET)
-    public ResponseEntity<List<Music>> getMusics() {
-        return new ResponseEntity<>(musicService.findMusics(), HttpStatus.OK);
+    @RequestMapping(value = "/artists", method = RequestMethod.GET)
+    public ResponseEntity<List<Artist>> getArtists() {
+        return new ResponseEntity<>(artistService.findArtists(), HttpStatus.OK);
     }
 
 //méthode GET by ID
 
-    @RequestMapping(value = "/musics/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Music> getMusicsById(@PathVariable(value = "id") Long id) {
+    @RequestMapping(value = "/artists/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Artist> getArtistsById(@PathVariable(value = "id") Long id) {
         try {
-            return new ResponseEntity<>(musicService.getMusics(id), HttpStatus.OK);
+            return new ResponseEntity<>(artistService.getArtists(id), HttpStatus.OK);
         }
         catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Music Not Found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Artist Not Found", e);
         }
     }
 
-    @RequestMapping(value = "/musics", method = RequestMethod.POST)
-    public ResponseEntity<Music> addMusics(@RequestBody Music music) {
-        musicService.addMusics(music);
-        return new ResponseEntity<>(music, HttpStatus.CREATED);
+    @RequestMapping(value = "/artists", method = RequestMethod.POST)
+    public ResponseEntity<Artist> addArtists(@RequestBody Artist artist) throws NotFoundException{
+        artist = artistService.addArtist(artist);
+        return new ResponseEntity<>(artist, HttpStatus.CREATED);
     }
 
 //Méthode DELETE
-    @RequestMapping(value = "/musics/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Music> deleteMusics(@PathVariable(value = "id") Long id) {
-        musicService.deleteMusic(id);
+    @RequestMapping(value = "/artists/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Artist> deleteArtists(@PathVariable(value = "id") Long id) {
+        artistService.deleteArtist(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/musics", method = RequestMethod.PUT)
-    public ResponseEntity<Music> putMusics(@RequestBody Music music) {
-        musicService.updateMusic(music);
-        return new ResponseEntity<>(music, HttpStatus.OK);
+    @RequestMapping(value = "/artists/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Artist> putArtist(@PathVariable(value = "id") Long id, @RequestBody Artist artist) {
+        artist.setId(id);
+        artist = artistService.updateArtist(artist);
+        return new ResponseEntity<>(artist, HttpStatus.OK);
     }
 }
 

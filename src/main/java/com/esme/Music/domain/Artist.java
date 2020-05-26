@@ -2,7 +2,10 @@ package com.esme.Music.domain;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Builder
@@ -10,8 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 
 public class Artist {
-    public Long id;
-    public String name_artist;
-    public Integer nb_fans;
-    public Integer nb_albums;
+    private Long id;
+    private String name_artist;
+    private Integer nb_fans;
+    private Integer nb_albums;
+    private List<Music> musics;
 }
+
+

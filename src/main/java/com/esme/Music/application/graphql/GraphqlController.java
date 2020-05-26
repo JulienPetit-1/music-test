@@ -46,5 +46,4 @@ public class GraphqlController {
                 .build());
         return executionResult.toSpecification();
     }
-
 }

@@ -1,30 +1,35 @@
 package com.esme.Music;
 
-import com.esme.Music.domain.Album;
-import com.esme.Music.domain.Artist;
+import com.esme.Music.domain.Music;
+import com.esme.Music.infrastructure.ArtistEntity;
+import com.esme.Music.infrastructure.ArtistRepository;
 import com.esme.Music.infrastructure.MusicEntity;
 import com.esme.Music.infrastructure.MusicRepository;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
-@ToString
 @Slf4j
 @SpringBootApplication
 @EnableScheduling
 
 public class MusicApplication implements CommandLineRunner {
 
-	@Autowired
+	private ArtistRepository artistRepository;
 	private MusicRepository musicRepository;
+
+	public MusicApplication(ArtistRepository artistRepository, MusicRepository musicRepository) {
+		this.artistRepository = artistRepository;
+		this.musicRepository = musicRepository;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(MusicApplication.class, args);
@@ -34,29 +39,38 @@ public class MusicApplication implements CommandLineRunner {
 	public void run(String... args) {
 
 		log.info("Data initilisation...");
-		saveMusic(1, "Money", "Pink Floyd", "The Dark Side of the Moon", "Progressive Rock",
-				4, null, 6, 120, "1973-05-07");
-		saveMusic(2, "Bohemian Raphsody", "Queen", "A Night at the Opera", "Opera Rock",
-				5, null, 00.06, 140, "1975-10-31");
+		saveArtist(1, "Pink Floyd", 159487, 15, Arrays.asList(Music.builder().name("Money").album("The Dark Side of The Moon").genre("Progressive Rock").note(5).feat(null).duration(Duration.ofMinutes(5)).BPM(140).release_date(LocalDate.parse("1973-05-07")).build()));
+		saveArtist(2, "Queen", 250694, 16, Arrays.asList(Music.builder().name("Bohemian Rapshody").album("A Night at The Opera").genre("Opera Rock").note(4).feat(null).duration(Duration.ofMinutes(6)).BPM(120).release_date(LocalDate.parse("1975-10-31")).build()));
 	}
 
-	private void saveMusic(long id, String name, List<Artist> name_artist, Album album,
-						   String genre, int note, String feat, Duration duration,
-						   int BPM, LocalDate release_date) {
-		this.musicRepository.save(
-				MusicEntity
-						.builder()
-						.id(id)
-						.name(name)
-						.genre(genre)
-						.note(note)
-						.feat(feat)
-						.duration(duration)
-						.BPM(BPM)
-						.release_date(release_date)
-						.build());
+	@Transactional
+	private void saveArtist(long id, String name_artist, int nb_fans, int nb_albums, List<Music> musics) {
 
+		ArtistEntity artistEntity = this.artistRepository.save(
+			ArtistEntity
+					.builder()
+					.id(id)
+					.name_artist(name_artist)
+					.nb_fans(nb_fans)
+					.nb_albums(nb_albums)
+					.build());
 
+		musics.stream()
+				.forEach(music ->
+						musicRepository.save(
+								MusicEntity
+										.builder()
+										.name(music.getName())
+										.artistEntity(artistEntity)
+										.album(music.getAlbum())
+										.genre(music.getGenre())
+										.note(music.getNote())
+										.feat(music.getFeat())
+										.duration(music.getDuration())
+										.BPM(music.getBPM())
+										.release_date(music.getRelease_date())
+										.build()
+						));
 	}
 
 }

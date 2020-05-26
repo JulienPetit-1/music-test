@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Builder
@@ -25,8 +26,8 @@ public class MusicEntity {
     private String name;
 //    @Column(name = "Artist", nullable = false)
 //    private Artist artist;
-//    @Column(name = "Album", nullable = false)
-//    private Album album;
+    @Column(name = "Album", nullable = false)
+    private String album;
     @Column(name = "Genre", length=50, nullable = false)
     private String genre;
     @Column(name = "Note")
@@ -37,11 +38,11 @@ public class MusicEntity {
     private Duration duration;
     @Column(name = "BPM")
     private Integer BPM;
-    @Column(name = "Release Date", nullable = false)
+    @Column(name = "Release_Date", nullable = false)
     private LocalDate release_date;
 
-    @ManyToOne
-    private AlbumEntity albumEntity;
+//    @ManyToOne
+//    private AlbumEntity albumEntity;
     @ManyToOne
     private ArtistEntity artistEntity;
 }
