@@ -19,7 +19,7 @@ public class CachingConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("musics");
+        return new ConcurrentMapCacheManager("artists");
     }
 
     public void evictAllCaches() {

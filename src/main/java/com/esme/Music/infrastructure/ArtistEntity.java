@@ -7,6 +7,7 @@ import java.util.List;
 
 
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Builder
@@ -20,7 +21,7 @@ public class ArtistEntity {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "Name", length=50, nullable = false)
+    @Column(name = "Name_artist", length = 100, nullable = false)
     private String name_artist;
     @Column(name = "Number_of_fans", nullable = false)
     private Integer nb_fans;
@@ -31,6 +32,6 @@ public class ArtistEntity {
 //    private LabelEntity labelEntity;
 //    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
 //    private List<AlbumEntity> albumEntities;
-    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<MusicEntity> musicEntities;
 }

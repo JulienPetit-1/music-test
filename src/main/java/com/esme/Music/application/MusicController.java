@@ -48,12 +48,11 @@ public class MusicController {
     public ResponseEntity<Artist> getArtistsById(@PathVariable(value = "id") Long id) {
         try {
             return new ResponseEntity<>(artistService.getArtists(id), HttpStatus.OK);
-        }
-        catch (NotFoundException e) {
+        } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Artist Not Found", e);
         }
     }
-
+//Méthode POST
     @RequestMapping(value = "/artists", method = RequestMethod.POST)
     public ResponseEntity<Artist> addArtists(@RequestBody Artist artist) throws NotFoundException{
         artist = artistService.addArtist(artist);
@@ -67,10 +66,11 @@ public class MusicController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//Méthode PUT
     @RequestMapping(value = "/artists/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Artist> putArtist(@PathVariable(value = "id") Long id, @RequestBody Artist artist) {
         artist.setId(id);
-        artist = artistService.updateArtist(artist);
+        artistService.updateArtist(artist);
         return new ResponseEntity<>(artist, HttpStatus.OK);
     }
 }

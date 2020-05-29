@@ -24,8 +24,6 @@ public class MusicEntity {
     private Long id;
     @Column(name = "Name", length=50, nullable = false)
     private String name;
-//    @Column(name = "Artist", nullable = false)
-//    private Artist artist;
     @Column(name = "Album", nullable = false)
     private String album;
     @Column(name = "Genre", length=50, nullable = false)
@@ -38,7 +36,7 @@ public class MusicEntity {
     private Duration duration;
     @Column(name = "BPM")
     private Integer BPM;
-    @Column(name = "Release_Date", nullable = false)
+    @Column(name = "Release_Date")
     private LocalDate release_date;
 
 //    @ManyToOne

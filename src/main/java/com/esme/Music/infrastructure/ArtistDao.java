@@ -15,7 +15,7 @@ public class ArtistDao {
     private ArtistRepository artistRepository;
     private MusicRepository musicRepository;
 
-    public ArtistDao(ArtistRepository artistRepository, MusicRepository musicRepository){
+    public ArtistDao(ArtistRepository artistRepository, MusicRepository musicRepository) {
         this.artistRepository = artistRepository;
         this.musicRepository = musicRepository;
     }
@@ -36,21 +36,24 @@ public class ArtistDao {
 
         artist.getMusics()
                 .stream()
-                .forEach(music ->
-                        musicRepository.save(buildMusicEntity(artistEntity, music)));
+                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
 
-        return buildArtist(
-                artistRepository.findById(artistEntity.getId()).orElseThrow(NotFoundException::new),
-                musicRepository.findByArtistEntity(artistEntity));
+        return buildArtist(artistRepository.findById(artistEntity.getId()).orElseThrow(NotFoundException::new), musicRepository.findByArtistEntity(artistEntity));
     }
 
     public void deleteArtist(Long id) {
         artistRepository.delete(artistRepository.findById(id).get());
     }
 
-    public Artist replaceArtist(Artist artist) {
+    public void replaceArtist(Artist artist){
+
+        //ajouter ligne pour supprimer artiste remplacé
+
         ArtistEntity artistEntity = artistRepository.save(buildArtistEntity(artist));
-        return buildArtist(artistEntity,  musicRepository.findByArtistEntity(artistEntity));
+
+        artist.getMusics()
+                .stream()
+                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
     }
 
     private MusicEntity buildMusicEntity(ArtistEntity artistEntity, Music music) {
@@ -67,6 +70,7 @@ public class ArtistDao {
                 .release_date(music.getRelease_date())
                 .build();
     }
+
     private ArtistEntity buildArtistEntity(Artist artist) {
         return ArtistEntity
                 .builder()
@@ -88,6 +92,15 @@ public class ArtistDao {
                         .stream()
                         .map(musicEntity -> Music.builder()
                                 .id(musicEntity.getId())
+                                .name(musicEntity.getName())
+                                .artist(Artist.builder().name_artist(artistEntity.getName_artist()).build())
+                                .album(musicEntity.getAlbum())
+                                .genre(musicEntity.getGenre())
+                                .note(musicEntity.getNote())
+                                .feat(musicEntity.getFeat())
+                                .duration(musicEntity.getDuration())
+                                .BPM(musicEntity.getBPM())
+                                .release_date(musicEntity.getRelease_date())
                                 .build())
                         .collect(Collectors.toList())
 
