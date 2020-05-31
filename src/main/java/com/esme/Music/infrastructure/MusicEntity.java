@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="Music_Entity")
 
 //Table BDD
 public class MusicEntity {

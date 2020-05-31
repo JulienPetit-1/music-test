@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="Artist_Entity")
 
 //Table BDD
 public class ArtistEntity {
@@ -32,6 +33,6 @@ public class ArtistEntity {
 //    private LabelEntity labelEntity;
 //    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
 //    private List<AlbumEntity> albumEntities;
-    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "artistEntity", cascade = CascadeType.ALL)
     private List<MusicEntity> musicEntities;
 }

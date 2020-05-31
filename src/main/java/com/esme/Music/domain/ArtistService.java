@@ -35,7 +35,8 @@ public class ArtistService {
         artistDao.deleteArtist(id);
     }
 
-    public void updateArtist(Artist artist) { artistDao.replaceArtist(artist);
-    }
+    public Artist updateArtist(Artist artist){ return artistDao.replaceArtist(artist); }
+
+    public void patchArtist(Artist artist) { artistDao.replaceArtist(artist); }
 
 }

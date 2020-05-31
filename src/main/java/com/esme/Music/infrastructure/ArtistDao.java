@@ -2,6 +2,7 @@ package com.esme.Music.infrastructure;
 
 import com.esme.Music.domain.Artist;
 import com.esme.Music.domain.Music;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 public class ArtistDao {
 
@@ -45,7 +47,7 @@ public class ArtistDao {
         artistRepository.delete(artistRepository.findById(id).get());
     }
 
-    public void replaceArtist(Artist artist){
+    public Artist replaceArtist(Artist artist){
 
         //ajouter ligne pour supprimer artiste remplacé
 
@@ -54,6 +56,8 @@ public class ArtistDao {
         artist.getMusics()
                 .stream()
                 .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
+
+        return buildArtist(artistEntity, musicRepository.findByArtistEntity(artistEntity));
     }
 
     private MusicEntity buildMusicEntity(ArtistEntity artistEntity, Music music) {
@@ -93,7 +97,7 @@ public class ArtistDao {
                         .map(musicEntity -> Music.builder()
                                 .id(musicEntity.getId())
                                 .name(musicEntity.getName())
-                                .artist(Artist.builder().name_artist(artistEntity.getName_artist()).build())
+                                .artist(artistEntity.getName_artist())
                                 .album(musicEntity.getAlbum())
                                 .genre(musicEntity.getGenre())
                                 .note(musicEntity.getNote())

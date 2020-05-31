@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @Builder
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 public class Music {
     private Long id;
     private String name;
-    private Artist artist;
+    private String artist;
     private String album;
     private String genre;
     private Integer note;

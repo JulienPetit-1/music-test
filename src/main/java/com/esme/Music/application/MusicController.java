@@ -2,6 +2,11 @@ package com.esme.Music.application;
 
 import com.esme.Music.domain.Artist;
 import com.esme.Music.domain.ArtistService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,9 +27,11 @@ import java.util.List;
 public class MusicController {
 
     private ArtistService artistService;
+    private ObjectMapper objectMapper;
 
-    public MusicController(ArtistService artistService) {
+    public MusicController(ArtistService artistService, ObjectMapper objectMapper) {
         this.artistService = artistService;
+        this.objectMapper = objectMapper;
     }
 
 
@@ -68,10 +75,30 @@ public class MusicController {
 
 //Méthode PUT
     @RequestMapping(value = "/artists/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Artist> putArtist(@PathVariable(value = "id") Long id, @RequestBody Artist artist) {
+    public ResponseEntity<Artist> putArtists(@PathVariable(value = "id") Long id, @RequestBody Artist artist) throws NotFoundException{
         artist.setId(id);
-        artistService.updateArtist(artist);
+        artist = artistService.updateArtist(artist);
         return new ResponseEntity<>(artist, HttpStatus.OK);
+    }
+
+//Méthode PATCH
+    @RequestMapping(value = "/artists/{id}", method = RequestMethod.PATCH, consumes = "application/json")
+    public ResponseEntity<String> patchArtist(
+            @PathVariable(value = "id") Long id,
+            @RequestBody JsonPatch patch)  {
+        try {
+            artistService.patchArtist(applyPatchToCustomer(patch, artistService.getArtists(id)));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (JsonPatchException | JsonProcessingException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private Artist applyPatchToCustomer(JsonPatch patch, Artist targetArtist ) throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetArtist, JsonNode.class));
+        return objectMapper.treeToValue(patched, Artist.class);
     }
 }
 
