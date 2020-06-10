@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface MusicRepository extends CrudRepository <MusicEntity, Long>{
 
+    List<MusicEntity> findByArtistEntityId(Long artistEntityId);
+
     List<MusicEntity> findByArtistEntity(ArtistEntity artistEntity);
 
 }

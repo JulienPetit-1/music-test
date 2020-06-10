@@ -1,5 +1,6 @@
-package com.esme.Music.domain;
+package com.esme.Music.domain.Artist;
 
+import com.esme.Music.domain.Music.Music;
 import lombok.*;
 
 import java.util.List;

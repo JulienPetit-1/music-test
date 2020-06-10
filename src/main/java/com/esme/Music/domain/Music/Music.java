@@ -1,4 +1,4 @@
-package com.esme.Music.domain;
+package com.esme.Music.domain.Music;
 
 
 import lombok.*;

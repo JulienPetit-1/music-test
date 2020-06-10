@@ -1,7 +1,7 @@
 package com.esme.Music.infrastructure;
 
-import com.esme.Music.domain.Artist;
-import com.esme.Music.domain.Music;
+import com.esme.Music.domain.Artist.Artist;
+import com.esme.Music.domain.Music.Music;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;

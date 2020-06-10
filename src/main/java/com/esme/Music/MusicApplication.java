@@ -1,6 +1,6 @@
 package com.esme.Music;
 
-import com.esme.Music.domain.Music;
+import com.esme.Music.domain.Music.Music;
 import com.esme.Music.infrastructure.ArtistEntity;
 import com.esme.Music.infrastructure.ArtistRepository;
 import com.esme.Music.infrastructure.MusicEntity;
@@ -39,10 +39,10 @@ public class MusicApplication implements CommandLineRunner {
 	public void run(String... args) {
 
 		log.info("Data initilisation...");
-		saveArtist(1, "Pink Floyd", 159487, 15, Arrays.asList(Music.builder().name("Money").album("The Dark Side of The Moon").genre("Progressive Rock").note(5).feat(null).duration(Duration.ofMinutes(5)).BPM(100).release_date(LocalDate.parse("1973-05-07")).build(),
+		saveArtist(1, "Pink Floyd", 159487, 15, Arrays.asList(Music.builder().name("Money").album("The Dark Side of The Moon").genre("Progressive Rock").note(5).feat(null).duration(Duration.ofMinutes(5)).BPM(100).release_date(LocalDate.of(1973, 5, 07)).build(),
 				Music.builder().name("Wish You Were Here").album("Wish You Were Here").genre("Progressive Rock").note(4).feat(null).duration(Duration.ofMinutes(4)).BPM(80).release_date(LocalDate.parse("1975-09-12")).build()));
-		saveArtist(3, "Queen", 250694, 16, Arrays.asList(Music.builder().name("Bohemian Rapshody").album("A Night at The Opera").genre("Opera Rock").note(4).feat(null).duration(Duration.ofMinutes(6)).BPM(90).release_date(LocalDate.parse("1975-10-31")).build()));
-		saveArtist(5, "Muse", 128487, 8, Arrays.asList(Music.builder().name("Uprising").album("The Resistance").genre("Art Rock").note(4).feat(null).duration(Duration.ofMinutes(4)).BPM(120).release_date(LocalDate.parse("2009-08-04")).build()));
+		saveArtist(3, "Queen", 250694, 16, Arrays.asList(Music.builder().name("Bohemian Rapshody").album("A Night at The Opera").genre("Opera Rock").note(4).feat(null).duration(Duration.ofMinutes(6)).BPM(90).release_date(LocalDate.of(1975,10,31)).build()));
+		saveArtist(5, "Muse", 128487, 8, Arrays.asList(Music.builder().name("Uprising").album("The Resistance").genre("Art Rock").note(4).feat(null).duration(Duration.ofMinutes(4)).BPM(120).release_date(LocalDate.of(2009, 8, 04)).build()));
 	}
 
 	@Transactional

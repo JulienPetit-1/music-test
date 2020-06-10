@@ -1,4 +1,4 @@
-package com.esme.Music.domain;
+package com.esme.Music.domain.Artist;
 
 import com.esme.Music.infrastructure.ArtistDao;
 import lombok.extern.slf4j.Slf4j;
