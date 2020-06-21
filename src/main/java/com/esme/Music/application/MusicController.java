@@ -41,7 +41,7 @@ public class MusicController {
         return new ResponseEntity<List<Music>>(musicService.findMusicsByArtistId(artistId), HttpStatus.OK);
     }
 
-    //Méthode POST
+//Méthode POST
     @RequestMapping(value = "/artists/{id}/musics", method = RequestMethod.POST)
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Music> addMusics(@PathVariable(value = "id") Long artistId, @RequestBody Music music) {

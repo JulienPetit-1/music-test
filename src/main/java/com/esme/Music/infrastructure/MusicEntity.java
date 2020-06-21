@@ -3,8 +3,6 @@ package com.esme.Music.infrastructure;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Duration;
-import java.time.LocalDate;
 
 
 @Getter
@@ -34,11 +32,11 @@ public class MusicEntity {
     @Column(name = "Feat", length=50)
     private String feat;
     @Column(name = "Duration", nullable = false)
-    private Duration duration;
+    private String duration;
     @Column(name = "BPM")
     private Integer BPM;
     @Column(name = "Release_Date")
-    private LocalDate release_date;
+    private String release_date;
 
 //    @ManyToOne
 //    private AlbumEntity albumEntity;

@@ -36,9 +36,10 @@ public class ArtistDao {
     public Artist addArtist(Artist artist) throws NotFoundException {
         ArtistEntity artistEntity = artistRepository.save(buildArtistEntity(artist));
 
-        artist.getMusics()
-                .stream()
-                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
+        // Partie à commenter pour frontend
+//        artist.getMusics()
+//                .stream()
+//                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
 
         return buildArtist(artistRepository.findById(artistEntity.getId()).orElseThrow(NotFoundException::new), musicRepository.findByArtistEntity(artistEntity));
     }
@@ -53,9 +54,11 @@ public class ArtistDao {
 
         ArtistEntity artistEntity = artistRepository.save(buildArtistEntity(artist));
 
-        artist.getMusics()
-                .stream()
-                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
+        // Partie à commenter pour frontend
+
+//        artist.getMusics()
+//                .stream()
+//                .forEach(music -> musicRepository.save(buildMusicEntity(artistEntity, music)));
 
         return buildArtist(artistEntity, musicRepository.findByArtistEntity(artistEntity));
     }

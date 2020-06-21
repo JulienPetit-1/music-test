@@ -10,6 +10,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.ToString;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 
 //Rest Controller
 
+@ToString
 @RestController
 @RequestMapping("/api/v1")
 @Api("API de gestion d'une librairie musicale")
@@ -71,13 +73,14 @@ public class ArtistController {
 //Méthode DELETE
     @RequestMapping(value = "/artists/{id}", method = RequestMethod.DELETE)
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Artist> deleteArtists(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<String> deleteArtists(@PathVariable(value = "id") Long id) {
         artistService.deleteArtist(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<String>("Artist n°" + Long.toString(id) + " deleted", HttpStatus.OK);
     }
 
 //Méthode PUT
     @RequestMapping(value = "/artists/{id}", method = RequestMethod.PUT)
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Artist> putArtists(@PathVariable(value = "id") Long id, @RequestBody Artist artist) throws NotFoundException{
         artist.setId(id);
         artist = artistService.updateArtist(artist);
@@ -91,7 +94,7 @@ public class ArtistController {
             @RequestBody JsonPatch patch)  {
         try {
             artistService.patchArtist(applyPatchToCustomer(patch, artistService.getArtists(id)));
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("The selected item has been replaced successfully !", HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (JsonPatchException | JsonProcessingException e) {

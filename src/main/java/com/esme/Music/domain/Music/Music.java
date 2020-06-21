@@ -3,9 +3,6 @@ package com.esme.Music.domain.Music;
 
 import lombok.*;
 
-import java.time.Duration;
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @ToString
@@ -22,8 +19,8 @@ public class Music {
     private String genre;
     private Integer note;
     private String feat;
-    private Duration duration;
+    private String duration;
     private Integer BPM;
-    private LocalDate release_date;
+    private String release_date;
 }
 
